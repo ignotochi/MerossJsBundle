@@ -3,8 +3,13 @@ services:
   apache:
     image: httpd:latest
     container_name: merossJS
+    network_mode: bridge
+    restart: always
+    hostname: merossjs-dck
+
     ports:
     - '8389:80'
+    
     volumes:
     - './dist/meross-js:/usr/local/apache2/htdocs'
 
