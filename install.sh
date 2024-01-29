@@ -144,7 +144,7 @@ build_angular_project() {
     fi
   fi
 
-  npm install --yes
+  npm install --yes > /dev/null
 
   ng build --configuration production --base-href "/"
 
