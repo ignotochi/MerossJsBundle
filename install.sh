@@ -114,11 +114,15 @@ build_angular_project() {
 
   cd "$destination_folder/$repo_name"
 
-  if [ -z "$base_url" ]; then
-  base_url=""
+  # Se l'utente fornisce un valore, formatta il base_url con "/$base_url/", altrimenti usa "/"
+  formatted_base_url=""
+  if [ -n "$base_url" ]; then
+    formatted_base_url="/$/"
+  else
+    formatted_base_url="/"
   fi
 
-  print_color "yellow" "Building Angular project for $repo_name with base_url: $base_url..."
+  print_color "yellow" "Building Angular project for $repo_name with base_url: $formatted_base_url..."
   
   if ! command -v npm >/dev/null; then
     read -p "npm is not installed. Do you want to install it along with Node.js version $node_version? (y/n): " install_npm
@@ -149,10 +153,10 @@ build_angular_project() {
     fi
   fi
 
-  npm install
+  npm install --yes
 
-  ng build --configuration production --base-href "$base_url" --deploy-url "$base_url" --progress=false
-  
+  ng build --configuration production --base-href "$formatted_base_url" --deploy-url "$formatted_base_url" --progress=false --no-interactive
+
   if [ $? -eq 0 ]; then
     print_color "green" "Angular project for $repo_name built successfully."
   else
@@ -161,9 +165,10 @@ build_angular_project() {
   fi
 }
 
+
 read -p "Enter the Base URL for Angular project (example: merossjs, default: /): " user_base_url
 
-build_angular_project "/$user_base_url/"
+build_angular_project "$user_base_url"
 
 print_color "green" "merossJS compiled with success!"
 
