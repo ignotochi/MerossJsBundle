@@ -136,4 +136,7 @@ build_angular_project "$user_base_url"
 
 print_color "green" "merossJS compiled with success"
 
+# Start Docker containers
+docker-compose up -d
+
 
