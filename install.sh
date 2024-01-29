@@ -1,5 +1,20 @@
 #!/bin/bash
 
+<<'DOC'
+This script performs the following tasks:
+1. Clones MerossApi and MerossJS Git repositories.
+2. Copies scripts from the docker-scripts folder to the respective repositories.
+3. Removes unwanted files from the repositories.
+4. Removes existing Docker containers (if any) for merossApi.
+5. Starts Docker containers for merossApi.
+6. Builds Angular project for merossJS, prompting the user to install npm and Angular CLI if not already installed.
+7. Starts Docker containers for merossJS.
+
+Ensure that Docker, Git, npm, and Angular CLI are installed on your system before running this script.
+
+Note: The script checks for successful execution at various stages and exits if any step fails.
+DOC
+
 # Set the destination and scripts folders
 destination_folder="$(pwd)"
 docker_scripts_folder="$(pwd)/docker-scripts"
@@ -38,9 +53,11 @@ clone_and_copy() {
       print_color "green" "Scripts copied for $repo_name."
     else
       print_color "red" "Error: Docker scripts folder not found for $repo_name."
+      exit 1
     fi
   else
     print_color "red" "Error: Cloning $repo_name repository failed."
+    exit 1
   fi
 }
 
@@ -74,25 +91,30 @@ fi
 # Start Docker containers
 docker-compose up -d
 
-print_color "green" "Docker containers started for merossApi."
+# Check if "merossApi" container is running
+if docker ps --format '{{.Names}}' | grep -q '^merossApi$'; then
+  print_color "green" "Docker containers started for merossApi."
+else
+  print_color "red" "Error: Docker containers failed to start for merossApi."
+  exit 1
+fi
 
-########
-########
-# Build Angular application
-########
-########
+########################################################################
+########################################################################
+##################### Build Angular application ########################
+########################################################################
+########################################################################
 
 node_version="18"
 
+# Function to build Angular project
 build_angular_project() {
   repo_name="merossJS"  
   base_url="$1"
 
-  cd $destination_folder/$repo_name
+  cd "$destination_folder/$repo_name"
 
   print_color "yellow" "Building Angular project for $repo_name with base_url: $base_url..."
-  
-  cd "$destination_folder/$repo_name"
   
   if ! command -v npm >/dev/null; then
     read -p "npm is not installed. Do you want to install it along with Node.js version $node_version? (y/n): " install_npm
@@ -125,19 +147,30 @@ build_angular_project() {
 
   npm install
 
-  yes no | ng build --configuration production --base-href "/$base_url/" --deploy-url "/$base_url/" --progress=false
+  ng build --configuration production --base-href "/$base_url/" --deploy-url "/$base_url/" --progress=false
   
-  print_color "green" "Angular project for $repo_name built successfully."
+  if [ $? -eq 0 ]; then
+    print_color "green" "Angular project for $repo_name built successfully."
+  else
+    print_color "red" "Error: Angular project for $repo_name failed to build."
+    exit 1
+  fi
 }
 
-read -p "Enter the base_url for Angular project (esample: merossjs): " user_base_url
+read -p "Enter the base_url for Angular project (example: merossjs): " user_base_url
 
 build_angular_project "$user_base_url"
 
-print_color "green" "merossJS compiled with successfully!"
+print_color "green" "merossJS compiled with success!"
 
+# Start Docker containers for merossJS
 docker-compose up -d
 
-print_color "green" "Docker containers started for merossJS."
-
+# Check if "merossJS" container is running
+if docker ps --format '{{.Names}}' | grep -q '^merossJS$'; then
+  print_color "green" "Docker containers started for merossJS."
+else
+  print_color "red" "Error: Docker containers failed to start for merossJS."
+  exit 1
+fi
 

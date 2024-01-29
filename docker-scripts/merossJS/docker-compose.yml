@@ -4,7 +4,7 @@ services:
     image: httpd:latest
     container_name: merossJS
     ports:
-    - '8085:80'
+    - '8389:80'
     volumes:
     - './merossJS/dist/meross-js:/usr/local/apache2/htdocs'
 
