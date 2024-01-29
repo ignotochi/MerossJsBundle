@@ -2,7 +2,7 @@
 
 # Set the destination and scripts folders
 destination_folder="$(pwd)"
-docker_scripts_folder="$(pwd)/src/docker-scripts"
+docker_scripts_folder="$(pwd)/docker-scripts"
 
 # URLs for Git repositories
 merossApi_url="https://github.com/ignotochi/MerossApi.git"
@@ -88,6 +88,8 @@ build_angular_project() {
   repo_name="merossJS"  
   base_url="$1"
 
+  cd $destination_folder/$repo_name
+
   print_color "yellow" "Building Angular project for $repo_name with base_url: $base_url..."
   
   cd "$destination_folder/$repo_name"
@@ -131,7 +133,6 @@ build_angular_project() {
 read -p "Enter the base_url for Angular project (e.g., myapp): " user_base_url
 
 build_angular_project "$user_base_url"
-
 
 print_color "green" "merossJS compiled with success"
 
