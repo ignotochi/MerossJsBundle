@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  python:
+    build: .
+    container_name: merossJS
+    network_mode: bridge
+    restart: always
+    hostname: merossapi-dck
+
+    environment:
+      - LANG=C.UTF-8
+      - PYTHON_PIP_VERSION=22.3.1
+      - PYTHON_VERSION=3.11.3
+
+    ports:
+      - '4449:4449'
+
+    volumes:
+      - '.:/usr/src/app'
+
+#    working_dir: /usr/src/app
+
+#    entrypoint: pip install --no-cache-dir -r requirements.txt
+
+#    command: >
+#       bash -c "python merossApp.py"
+
+volumes:
+  merossApi_data:
+    driver: local
