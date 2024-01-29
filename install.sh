@@ -127,7 +127,7 @@ build_angular_project() {
       nvm install "$node_version"
       nvm use "$node_version"
 
-      npm install -g npm --yes
+      npm install -g npm --yes > /dev/null
     else
       print_color "red" "Error: npm is required but not installed. Exiting."
       exit 1
@@ -137,7 +137,7 @@ build_angular_project() {
   if ! command -v ng >/dev/null; then
     read -p "Angular CLI is not installed. Do you want to install it? (y/n): " install_ng
     if [ "$install_ng" = "y" ]; then
-      npm install -g @angular/cli --yes --no-interactive
+      npm install -g @angular/cli --yes > /dev/null
     else
       print_color "red" "Error: Angular CLI is required but not installed. Exiting."
       exit 1
