@@ -82,6 +82,7 @@ print_color "green" "Docker containers started for merossApi."
 ########
 ########
 
+node_version="18"
 
 build_angular_project() {
   repo_name="merossJS"  
@@ -91,13 +92,19 @@ build_angular_project() {
   
   cd "$destination_folder/$repo_name"
   
-
   if ! command -v npm >/dev/null; then
-
-    read -p "npm is not installed. Do you want to install it? (y/n): " install_npm
+    read -p "npm is not installed. Do you want to install it along with Node.js version $node_version? (y/n): " install_npm
     if [ "$install_npm" = "y" ]; then
 
-      sudo yum install npm
+      if ! command -v nvm >/dev/null; then
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+        source ~/.bashrc  # or restart your shell
+      fi
+
+      nvm install "$node_version"
+      nvm use "$node_version"
+      
+      npm install -g npm
     else
       print_color "red" "Error: npm is required but not installed. Exiting."
       exit 1
@@ -115,7 +122,7 @@ build_angular_project() {
   fi
 
   npm install
-  
+
   ng build --configuration production --base-href "/$base_url/" --deploy-url "/$base_url/"
   
   print_color "green" "Angular project for $repo_name built successfully."
