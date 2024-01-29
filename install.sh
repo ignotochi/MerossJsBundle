@@ -15,6 +15,10 @@ Ensure that Docker, Git, npm, and Angular CLI are installed on your system befor
 Note: The script checks for successful execution at various stages and exits if any step fails.
 DOC
 
+print_color "cyan" "############ Welcome to #############"
+print_color "cyan" "##### Meross Bundle installation ####"
+print_color "cyan" "#####################################"
+
 # Set the destination and scripts folders
 destination_folder="$(pwd)"
 docker_scripts_folder="$(pwd)/docker-scripts"
@@ -74,8 +78,6 @@ fi
 if [ ! -d "$docker_scripts_folder" ]; then
   mkdir -p "$docker_scripts_folder"
 fi
-
-print_color "white" "------------------------------------------------------"
 
 # Clone and copy MerossApi repository
 clone_and_copy "$merossApi_url" "merossApi"
