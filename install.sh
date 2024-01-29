@@ -115,7 +115,7 @@ build_angular_project() {
   cd "$destination_folder/$repo_name"
 
   if [ -z "$base_url" ]; then
-  base_url="/"
+  base_url=""
   fi
 
   print_color "yellow" "Building Angular project for $repo_name with base_url: $base_url..."
@@ -161,7 +161,7 @@ build_angular_project() {
   fi
 }
 
-read -p "Enter the base_url for Angular project (example: merossjs, default: /): " user_base_url
+read -p "Enter the Base URL for Angular project (example: merossjs, default: /): " user_base_url
 
 build_angular_project "/$user_base_url/"
 
