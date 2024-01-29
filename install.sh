@@ -70,9 +70,9 @@ clone_and_copy() {
 }
 
 print_color "white" " "
-print_color "cyan" "############ Welcome to #############"
-print_color "cyan" "##### Meross Bundle installation ####"
-print_color "cyan" "#####################################"
+print_color "white" "############ Welcome to #############"
+print_color "white" "##### Meross Bundle installation ####"
+print_color "white" "#####################################"
 print_color "white" " "
 
 # Ensure destination and scripts folders exist
