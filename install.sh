@@ -130,7 +130,7 @@ build_angular_project() {
   print_color "green" "Angular project for $repo_name built successfully."
 }
 
-read -p "Enter the base_url for Angular project (e.g., myapp): " user_base_url
+read -p "Enter the base_url for Angular project (esample: merossjs): " user_base_url
 
 build_angular_project "$user_base_url"
 
