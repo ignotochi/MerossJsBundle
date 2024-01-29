@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "waitress-serve", "--port=4449", "merossApp:app" ]
+CMD [ "waitress-serve", "--port=4449", "main:app" ]
