@@ -15,10 +15,6 @@ Ensure that Docker, Git, npm, and Angular CLI are installed on your system befor
 Note: The script checks for successful execution at various stages and exits if any step fails.
 DOC
 
-print_color "cyan" "############ Welcome to #############"
-print_color "cyan" "##### Meross Bundle installation ####"
-print_color "cyan" "#####################################"
-
 # Set the destination and scripts folders
 destination_folder="$(pwd)"
 docker_scripts_folder="$(pwd)/docker-scripts"
@@ -69,6 +65,10 @@ clone_and_copy() {
     exit 1
   fi
 }
+
+print_color "cyan" "############ Welcome to #############"
+print_color "cyan" "##### Meross Bundle installation ####"
+print_color "cyan" "#####################################"
 
 # Ensure destination and scripts folders exist
 if [ ! -d "$destination_folder" ]; then
