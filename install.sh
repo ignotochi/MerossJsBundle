@@ -180,16 +180,12 @@ build_angular_project() {
 
 build_angular_project
 
-# Check if the "merossApi" container already exists and remove it
+# Check if the "merossJS" container already exists and remove it
 if docker ps -a --format '{{.Names}}' | grep -q '^merossJS$'; then
 
-  print_color "white" "------------------------------------------------------"
-
-  print_color "magenta" "Removing existing merossJs container..."
-  docker rm -f merossJS > /dev/null
-
-  print_color "white" "------------------------------------------------------"
-  print_color "green" "Existing merossJs container removed."
+print_color "magenta" "Removing existing merossJs container..."
+docker rm -f merossJS > /dev/null
+print_color "green" "Existing merossJs container removed."
 fi
 
 # Start Docker containers for merossJS
