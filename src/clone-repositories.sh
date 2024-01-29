@@ -1,7 +1,7 @@
 #!/bin/bash
 
 destination_folder="$(pwd)"
-docker_scripts_folder="$destination_folder/docker-scripts"
+docker_scripts_folder="$(pwd)/docker-scripts"
 
 merossApi_url="https://github.com/ignotochi/MerossApi.git"
 merossJS_url="https://github.com/ignotochi/MerossJS.git"
@@ -22,8 +22,8 @@ cp "$docker_scripts_folder/merossJS/*" "$destination_folder/merossJS"
 
 echo "Repositories cloned successfully."
 
-cd "$destination_folder/merossApi"
-docker-compose up -d
+# cd "$destination_folder/merossApi"
+# docker-compose up -d
 
 # cd "$destination_folder/merossJS"
 # docker-compose up -d
