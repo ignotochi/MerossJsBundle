@@ -69,9 +69,11 @@ clone_and_copy() {
   fi
 }
 
+print_color "white" " "
 print_color "cyan" "############ Welcome to #############"
 print_color "cyan" "##### Meross Bundle installation ####"
 print_color "cyan" "#####################################"
+print_color "white" " "
 
 # Ensure destination and scripts folders exist
 if [ ! -d "$destination_folder" ]; then
