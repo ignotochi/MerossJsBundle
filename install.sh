@@ -1,6 +1,6 @@
 #!/bin/bash
 
-destination_folder="$(pwd)"
+destination_folder="$(pwd)/merossJsBundle"
 docker_scripts_folder="$(pwd)/src/docker-scripts"
 
 merossApi_url="https://github.com/ignotochi/MerossApi.git"
