@@ -103,8 +103,19 @@ build_angular_project() {
       exit 1
     fi
   fi
-  
+
+  if ! command -v ng >/dev/null; then
+    read -p "Angular CLI is not installed. Do you want to install it? (y/n): " install_ng
+    if [ "$install_ng" = "y" ]; then
+      npm install -g @angular/cli
+    else
+      print_color "red" "Error: Angular CLI is required but not installed. Exiting."
+      exit 1
+    fi
+  fi
+
   npm install
+  
   ng build --configuration production --base-href "/$base_url/" --deploy-url "/$base_url/"
   
   print_color "green" "Angular project for $repo_name built successfully."
