@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the destination and scripts folders
-destination_folder="$(pwd)/merossJsBundle"
+destination_folder="$(pwd)"
 docker_scripts_folder="$(pwd)/src/docker-scripts"
 
 # URLs for Git repositories
@@ -103,7 +103,7 @@ build_angular_project() {
 
       nvm install "$node_version"
       nvm use "$node_version"
-      
+
       npm install -g npm
     else
       print_color "red" "Error: npm is required but not installed. Exiting."
