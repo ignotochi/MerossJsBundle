@@ -45,7 +45,10 @@ clone_and_copy() {
   repo_url="$1"
   repo_name="$2"
 
+  print_color "white" "------------------------------------------------------"
+
   print_color "yellow" "Cloning $repo_name repository..."
+  
   git clone "$repo_url" "$destination_folder/$repo_name"
   
   if [ -d "$destination_folder/$repo_name" ]; then
