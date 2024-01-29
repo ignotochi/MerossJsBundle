@@ -45,16 +45,12 @@ clone_and_copy() {
   repo_url="$1"
   repo_name="$2"
 
-  print_color "blue" "-----------------------------------"
-
   print_color "yellow" "Cloning $repo_name repository..."
   git clone "$repo_url" "$destination_folder/$repo_name"
   
   if [ -d "$destination_folder/$repo_name" ]; then
     # Remove unwanted files if necessary (e.g., main.py)
     rm "$destination_folder/$repo_name/main.py" 2>/dev/null
-    
-    print_color "blue" "-----------------------------------"
 
     # Copy Docker scripts
     if [ -d "$docker_scripts_folder/$repo_name" ]; then
@@ -79,7 +75,7 @@ if [ ! -d "$docker_scripts_folder" ]; then
   mkdir -p "$docker_scripts_folder"
 fi
 
-print_color "blue" "-----------------------------------"
+print_color "white" "------------------------------------------------------"
 
 # Clone and copy MerossApi repository
 clone_and_copy "$merossApi_url" "merossApi"
@@ -92,19 +88,19 @@ print_color "green" "Repositories cloned and scripts copied successfully."
 # Change directory to merossApi
 cd "$destination_folder/merossApi"
 
-print_color "blue" "-----------------------------------"
+print_color "white" "------------------------------------------------------"
 
 # Check if the "merossApi" container already exists and remove it
 if docker ps -a --format '{{.Names}}' | grep -q '^merossApi$'; then
   print_color "magenta" "Removing existing merossApi container..."
-  docker rm -f merossApi
+  docker rm -f merossApi > /dev/null
   print_color "green" "Existing merossApi container removed."
 fi
 
 # Start Docker containers
-docker-compose up -d
+docker-compose up -d > /dev/null
 
-print_color "blue" "-----------------------------------"
+print_color "white" "------------------------------------------------------"
 
 # Check if "merossApi" container is running
 if docker ps --format '{{.Names}}' | grep -q '^merossApi$'; then
@@ -119,7 +115,7 @@ fi
 ##################### Build Angular application ########################
 ########################################################################
 ########################################################################
-
+ 
 node_version="18"
 
 # Function to build Angular project
@@ -128,7 +124,7 @@ build_angular_project() {
 
   cd "$destination_folder/$repo_name"
 
-  print_color "blue" "-----------------------------------"
+  print_color "white" "------------------------------------------------------"
 
   print_color "yellow" "Building Angular project for $repo_name..."
   
@@ -165,7 +161,7 @@ build_angular_project() {
 
   ng build --configuration production --base-href "/"
 
-  print_color "blue" "-----------------------------------"
+  print_color "white" "------------------------------------------------------"
 
   if [ $? -eq 0 ]; then
     print_color "green" "Angular project for $repo_name built successfully."
@@ -180,20 +176,20 @@ build_angular_project
 # Check if the "merossApi" container already exists and remove it
 if docker ps -a --format '{{.Names}}' | grep -q '^merossJS$'; then
 
-  print_color "blue" "-----------------------------------"
+  print_color "white" "------------------------------------------------------"
 
   print_color "magenta" "Removing existing merossJs container..."
-  docker rm -f merossJS
+  docker rm -f merossJS > /dev/null
 
-  print_color "blue" "-----------------------------------"
+  print_color "white" "------------------------------------------------------"
   print_color "green" "Existing merossJs container removed."
 fi
 
 # Start Docker containers for merossJS
-docker-compose up -d
+docker-compose up -d > /dev/null
 
 # Check if "merossJS" container is running
-print_color "blue" "-----------------------------------"
+print_color "white" "------------------------------------------------------"
 
 if docker ps --format '{{.Names}}' | grep -q '^merossJS$'; then
   print_color "green" "Docker containers started for merossJS."
