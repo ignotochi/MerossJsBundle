@@ -114,6 +114,10 @@ build_angular_project() {
 
   cd "$destination_folder/$repo_name"
 
+  if [ -z "$base_url" ]; then
+  base_url="/"
+  fi
+
   print_color "yellow" "Building Angular project for $repo_name with base_url: $base_url..."
   
   if ! command -v npm >/dev/null; then
@@ -128,7 +132,7 @@ build_angular_project() {
       nvm install "$node_version"
       nvm use "$node_version"
 
-      npm install -g npm
+      npm install -g npm --yes
     else
       print_color "red" "Error: npm is required but not installed. Exiting."
       exit 1
@@ -138,7 +142,7 @@ build_angular_project() {
   if ! command -v ng >/dev/null; then
     read -p "Angular CLI is not installed. Do you want to install it? (y/n): " install_ng
     if [ "$install_ng" = "y" ]; then
-      npm install -g @angular/cli
+      npm install -g @angular/cli --yes --no-interactive
     else
       print_color "red" "Error: Angular CLI is required but not installed. Exiting."
       exit 1
