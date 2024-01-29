@@ -15,6 +15,7 @@ if [ ! -d "$docker_scripts_folder" ]; then
 fi
 
 git clone "$merossApi_url" "$destination_folder/merossApi"
+rm "$destination_folder/merossApi/main.py"
 cp -r "$docker_scripts_folder/merossApi/"* "$destination_folder/merossApi/"
 
 git clone "$merossJS_url" "$destination_folder/merossJS"
