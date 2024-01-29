@@ -6,7 +6,7 @@ services:
     ports:
     - '8085:80'
     volumes:
-    - ./merossJS/dist/meross-js:/usr/local/apache2/htdocs
+    - './merossJS/dist/meross-js:/usr/local/apache2/htdocs'
 
 version: '3'
 

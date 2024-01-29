@@ -125,7 +125,7 @@ build_angular_project() {
 
   npm install
 
-  ng build --configuration production --base-href "/$base_url/" --deploy-url "/$base_url/"
+  yes no | ng build --configuration production --base-href "/$base_url/" --deploy-url "/$base_url/" --progress=false
   
   print_color "green" "Angular project for $repo_name built successfully."
 }
@@ -134,9 +134,10 @@ read -p "Enter the base_url for Angular project (esample: merossjs): " user_base
 
 build_angular_project "$user_base_url"
 
-print_color "green" "merossJS compiled with success"
+print_color "green" "merossJS compiled with successfully!"
 
-# Start Docker containers
 docker-compose up -d
+
+print_color "green" "Docker containers started for merossJS."
 
 
