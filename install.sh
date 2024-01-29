@@ -146,7 +146,7 @@ build_angular_project() {
 
   npm install --yes
 
-  ng build --configuration production
+  ng build --configuration production --base-href "/"
 
   if [ $? -eq 0 ]; then
     print_color "green" "Angular project for $repo_name built successfully."
