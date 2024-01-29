@@ -16,6 +16,8 @@ print_color() {
     yellow) echo -e "\e[93m$2\e[0m";;
     *)     echo "$2";;
   esac
+
+  sleep 2
 }
 
 # Function to perform Git clone and copy scripts
@@ -59,12 +61,17 @@ clone_and_copy "$merossJS_url" "merossJS"
 
 print_color "green" "Repositories cloned and scripts copied successfully."
 
-# Change directory to merossApi and start Docker containers
+# Change directory to merossApi
 cd "$destination_folder/merossApi"
+
+# Check if the "merossApi" container already exists and remove it
+if docker ps -a --format '{{.Names}}' | grep -q '^merossApi$'; then
+  print_color "yellow" "Removing existing merossApi container..."
+  docker rm -f merossApi
+  print_color "green" "Existing merossApi container removed."
+fi
+
+# Start Docker containers
 docker-compose up -d
 
 print_color "green" "Docker containers started for merossApi."
-
-
-# cd "$destination_folder/merossJS"
-# docker-compose up -d
