@@ -95,6 +95,11 @@ print_color "green" "Repositories cloned and scripts copied successfully."
 # Change directory to merossApi
 cd "$destination_folder/merossApi"
 
+if [ ! -d "logs" ]; then
+  mkdir -p "logs"
+fi
+
+
 print_color "white" "------------------------------------------------------"
 
 # Check if the "merossApi" container already exists and remove it
