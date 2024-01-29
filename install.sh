@@ -37,7 +37,7 @@ print_color() {
     *)     echo "$2";;
   esac
 
-  sleep 3
+  sleep 1
 }
 
 # Function to perform Git clone and copy scripts
