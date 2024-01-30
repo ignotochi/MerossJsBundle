@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from meross.api.device import webToggleDeviceApi, webLoadDevicesApi
 from meross.api.auth import webLogoutApi, webAuthApi, webCheckApi
+from waitress import serve
 
 app = Flask(__name__)
 
