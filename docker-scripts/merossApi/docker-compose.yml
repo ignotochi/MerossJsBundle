@@ -11,7 +11,7 @@ services:
     environment:
       - LANG=C.UTF-8
       - PYTHON_PIP_VERSION=22.3.1
-      - PYTHON_VERSION=3.9
+      - PYTHON_VERSION=3.12
 
     ports:
       - '4449:4449'
