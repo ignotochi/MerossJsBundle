@@ -99,7 +99,6 @@ if [ ! -d "logs" ]; then
   mkdir -p "logs"
 fi
 
-
 print_color "white" "------------------------------------------------------"
 
 # Check if the "merossApi" container already exists and remove it
@@ -184,6 +183,9 @@ build_angular_project() {
 }
 
 build_angular_project
+
+# create symlink for merossJS configuration
+ln -s "$destination_folder/merossJS/dist/meross-js/assets/merossApi.conf.json"  .
 
 # Check if the "merossJS" container already exists and remove it
 if docker ps -a --format '{{.Names}}' | grep -q '^merossJS$'; then
