@@ -20,7 +20,7 @@ Inside the MerossBundle folder, you will find a MerossJS folder, which contains 
 ``` json 
 {
     "language" : "it",
-    "port": "",
+    "port": "4449",
     "marossApiUrl": "localhost",
     "protocol": "https"
 }
