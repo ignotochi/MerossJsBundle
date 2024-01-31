@@ -2,27 +2,42 @@
 
 
 ## Cos'è merossJsBundle
-questo repository contiene un script bash che permette di poeter clonare il repository MerossApi e il repository MerossJS,
-all'interno di due container. Il primo un container python e il secondo all' itnenro di un container httpd, utilizzando in entrambi i casi docker compose.
-Il container MersoJS verrà creato solo dopo la compilazione del codice sorgente che sarà a carico dello script.
+This repository contains a bash script that allows you to clone the MerossApi and MerossJS repositories into two containers. The first one is a Python container, and the second one is inside an HTTPD container, using Docker Compose in both cases. The MerossJS container will be created only after compiling the source code, which is handled by the script.
 
-requisiti:
+Requirements:
 
-- Linux (testato su cebtos stream9)
-- Dcoker
-- Docker compose
-- Npm (installato dallo script se mancante)
-- Nvm (installato dallo script se mancante)
+Linux (tested on CentOS Stream 9)
+Docker
+Docker Compose
+Npm (installed by the script if missing)
+Nvm (installed by the script if missing)
+The result will be two containers, MerossApi and MerossJS, exported on port 4449 and 8389, respectively.
 
-Il risultato saranno due container MerossApi e MersoJS esporti il primo sulla porta 4449, mentre il secondo sulla porta 8389.
+If accessed from localhost, no additional action is required. Otherwise, you can set up a reverse proxy for both containers and reach them in the way you prefer.
 
-Nel caso in cui si acceda da localhost, non occorrerà fare nussna azione aggiuntiva, altrimenti potrete mettere sotto reverse proxy entrambe i container e raggiungerli nel modo che più preferite.
+Inside the MerossBundle folder, you will find a MerossJS folder, which contains a configuration file named merossApi.conf.json:
 
-All'interno della cartella MerossBundle troverete una cartella MerossJS, la quale al suo interno troverete un file .json di configurazione: come questo:
+``` json 
+{
+    "language" : "it",
+    "port": "",
+    "marossApiUrl": "localhost",
+    "protocol": "https"
+}
+```
 
-
-
-
-modificatelo solo se necessario nel caso in cui il backend sia esposto su un indirizzo diverso da localhost (default)
+Modify it only if necessary, such as when the backend is exposed on an address other than localhost (default) or if you want to change the default language.
 
 ## Come installare
+
+Navigate to your preferred installation directory and run:
+
+``` git 
+gti clone https://github.com/ignotochi/MerossJsBundle.git)https://github.com/ignotochi/MerossJsBundle.git
+```
+This will clone the MerossApi and MerossJS repositories, and then the frontend in Angular will be compiled. If prompted to install npm and nvm, type Y.
+
+After the procedure is complete, go into the merossJs folder and modify the merossApi.conf.json file if necessary, as mentioned earlier.
+
+
+
