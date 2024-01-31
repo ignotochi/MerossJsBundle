@@ -35,7 +35,7 @@ Navigate to your preferred installation directory and run:
 ``` git 
 gti clone https://github.com/ignotochi/MerossJsBundle.git)https://github.com/ignotochi/MerossJsBundle.git
 ```
-In the root folder you will find a bash script install.sh.
+In the root folder you will find a bash script install.sh
 
 run:
 ``` bash 
