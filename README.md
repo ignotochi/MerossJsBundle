@@ -35,6 +35,12 @@ Navigate to your preferred installation directory and run:
 ``` git 
 gti clone https://github.com/ignotochi/MerossJsBundle.git)https://github.com/ignotochi/MerossJsBundle.git
 ```
+In the root folder you will find bash script install.sh.
+
+run:
+``` bash 
+sh install.sh
+```
 This will clone the MerossApi and MerossJS repositories, and then the frontend in Angular will be compiled. If prompted to install npm and nvm, type Y.
 
 After the procedure is complete, go into the merossJs folder and modify the merossApi.conf.json file if necessary, as mentioned earlier.
