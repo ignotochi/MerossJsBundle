@@ -19,10 +19,10 @@ Inside the MerossBundle folder, you will find a MerossJS folder, which contains 
 
 ``` json 
 {
-    "language" : "it",
-    "port": "4449",
-    "marossApiUrl": "localhost",
-    "protocol": "https"
+    "language" : "it", (default language used by frontend)
+    "port": "4449", (port of MerossApi server)
+    "marossApiUrl": "localhost", (url of MerossAPI server)
+    "protocol": "https" (protocol of MerossAPI server)
 }
 ```
 
@@ -42,9 +42,16 @@ Move there and run:
 ``` bash 
 sh install.sh
 ```
+
 This will clone the MerossApi and MerossJS repositories, and then the frontend in Angular will be compiled. If prompted to install npm and nvm, type Y.
 
 After the procedure is complete, go into the merossJs folder and modify the merossApi.conf.json file if necessary, as mentioned earlier.
+
+then open your brpwser and navigate to:
+
+``` bash 
+http://localhost:8389
+```
 
 Enjoy!
 
