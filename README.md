@@ -1,4 +1,4 @@
-![ezcv logo](https://raw.githubusercontent.com/ignotochi/MerossBundleJs/master/merossJs_login.png)
+![ezcv logo](https://raw.githubusercontent.com/ignotochi/MerossJsBundle/blob/master/merossBundle_install.png)
 
 # MerossJsBundle - 1.0.1
 
