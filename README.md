@@ -8,7 +8,7 @@ This repository contains a bash script that allows you to clone the MerossApi an
 
 - Linux (tested on CentOS Stream 9)
 - Docker
-- Docker Compose (see: https://docs.docker.com/compose/install)
+- Docker Compose (see: [https://docs.docker.com/compose/install](https://docs.docker.com/compose/install/linux/#install-using-the-repository))
 - Npm (installed by the script if missing)
 - Nvm (installed by the script if missing)
 - The result will be two containers, MerossApi and MerossJS, exported on port 4449 and 8389, respectively.
