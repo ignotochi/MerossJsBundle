@@ -1,3 +1,5 @@
+![ezcv logo](https://raw.githubusercontent.com/ignotochi/MerossBundleJs/master/merossJs_login.png)
+
 # MerossJsBundle - 1.0.1
 
 ### What is it MerossJsBundle
