@@ -33,7 +33,7 @@ Modify it only if necessary, such as when the backend is exposed on an address o
 Navigate to your preferred installation directory and run:
 
 ```
-git [clone https://github.com/ignotochi/MerossJsBundle.git](https://github.com/ignotochi/MerossJsBundle.git)
+git clone https://github.com/ignotochi/MerossJsBundle.git
 ```
 In the root folder you will find a bash script called install.sh
 
