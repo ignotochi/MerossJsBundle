@@ -1,4 +1,4 @@
-# MerossJsBundle V1.0.0
+# MerossJsBundle - v1.0.0
 
 ### What is it MersoJsBUndle
 
