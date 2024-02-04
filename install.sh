@@ -19,6 +19,10 @@ DOC
 destination_folder="$(pwd)"
 docker_scripts_folder="$(pwd)/docker-scripts"
 
+# SetmerossApi.conf.json folders
+config_file="merossApi.conf.json"
+config_file_path="dist/meross-js/assets/$config_file"
+
 # URLs for Git repositories
 merossApi_url="https://github.com/ignotochi/MerossApi.git"
 merossJS_url="https://github.com/ignotochi/MerossJS.git"
@@ -45,9 +49,6 @@ clone_and_copy() {
   repo_url="$1"
   repo_name="$2"
 
-  config_file="merossApi.conf.json"
-  config_file_path="dist/meross-js/assets/$config_file"
-
   print_color "white" "------------------------------------------------------"
 
  destination_path="$destination_folder/$repo_name"
@@ -55,10 +56,6 @@ clone_and_copy() {
   if [ -d "$destination_path" ]; then
 
     cd "$destination_path"
-    
-    if [ -f "$config_file_path" ]; then
-      mv"$config_file_path" "$destination_folder"
-    fi
 
     print_color "yellow" "Pulling latest changes for $repo_name repository..." 
     git pull
@@ -67,7 +64,6 @@ clone_and_copy() {
       print_color "red" "Error: Pulling changes for $repo_name repository failed."
       exit 1
     else
-      mv -f "$destination_folder/$config_file" "$config_file_path/"
       print_color "green" "Successfully pulled latest changes for $repo_name."
     fi
   else
@@ -92,13 +88,27 @@ clone_and_copy() {
   fi
 }
 
-  print_color "white" "------------------------------------------------------"
+save_merossApi_config() {
+  repo_name="$1"
 
-print_color "white" " "
-print_color "white" "####################### Welcome to #####################"
-print_color "white" "################ Meross Bundle installation ############"
-print_color "white" "########################################################"
-print_color "white" " "
+  destination_path="$destination_folder/$repo_name"
+
+  if [ -f "$destination_path/$config_file_path" ]; then
+    mv "$destination_path/$config_file_path" "$destination_folder"
+  fi
+}
+
+restore_merossApi_config() {
+  repo_name="$1"
+
+  if [ -f "$destination_folder/$config_file" ]; then
+    mv -f "$destination_folder/$config_file" "$destination_folder/$repo_name/$config_file_path"
+  fi
+}
+
+print_color "white" "##################### Welcome to #####################"
+print_color "white" "############## Meross Bundle installation ############"
+print_color "white" "######################################################"
 
 # Ensure destination and scripts folders exist
 if [ ! -d "$destination_folder" ]; then
@@ -113,7 +123,9 @@ fi
 clone_and_copy "$merossApi_url" "merossApi"
 
 # Clone and copy MerossJS repository
+save_merossApi_config "merossJS"
 clone_and_copy "$merossJS_url" "merossJS"
+restore_merossApi_config "merossJS"
 
 print_color "green" "Repositories cloned and scripts copied successfully."
 
