@@ -16,8 +16,8 @@ Note: The script checks for successful execution at various stages and exits if 
 DOC
 
 # Set projects folder
-project_folder_merossJS="merossApi"
-project_folder_merossApi="merossJS"
+project_folder_merossJS="merossJS"
+project_folder_merossApi="merossApi"
 
 # Set the destination and scripts folders
 destination_folder="$(pwd)"
@@ -107,8 +107,7 @@ save_merossJS_config() {
 
   destination_path="$destination_folder/$repo_name"
 
-  echo "Destination Folder Path: $destination_path"
-  
+  echo "Destination Folder Path: $destination_path" 
   echo "Save current Path: $(pwd)"
   echo "Save source Path: $destination_path/$config_file_path"
   echo "Save destination Path: $destination_folder"
@@ -132,9 +131,11 @@ restore_merossJS_config() {
   fi
 }
 
+print_color "white" ""
 print_color "white" "##################### Welcome to #####################"
 print_color "white" "############## Meross Bundle installation ############"
 print_color "white" "######################################################"
+print_color "white" ""
 
 # Ensure destination and scripts folders exist
 if [ ! -d "$destination_folder" ]; then
@@ -192,7 +193,7 @@ node_version="18"
 
 # Function to build Angular project
 build_angular_project() {
-  repo_name="merossJS"  
+  repo_name="$project_folder_merossJS"  
 
   cd "$destination_folder/$repo_name"
 
