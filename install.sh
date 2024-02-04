@@ -53,13 +53,14 @@ clone_and_copy() {
  destination_path="$destination_folder/$repo_name"
 
   if [ -d "$destination_path" ]; then
+
+    cd "$destination_path"
     
     if [ -f "$config_file_path" ]; then
       mv"$config_file_path" "$destination_folder"
     fi
 
-    print_color "yellow" "Pulling latest changes for $repo_name repository..."
-    cd "$destination_path"
+    print_color "yellow" "Pulling latest changes for $repo_name repository..." 
     git pull
 
     if [ $? -ne 0 ]; then
@@ -91,10 +92,12 @@ clone_and_copy() {
   fi
 }
 
+  print_color "white" "------------------------------------------------------"
+
 print_color "white" " "
-print_color "white" "############ Welcome to #############"
-print_color "white" "##### Meross Bundle installation ####"
-print_color "white" "#####################################"
+print_color "white" "####################### Welcome to #####################"
+print_color "white" "################ Meross Bundle installation ############"
+print_color "white" "########################################################"
 print_color "white" " "
 
 # Ensure destination and scripts folders exist
