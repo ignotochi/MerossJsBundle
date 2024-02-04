@@ -15,6 +15,9 @@ Ensure that Docker, Git, npm, and Angular CLI are installed on your system befor
 Note: The script checks for successful execution at various stages and exits if any step fails.
 DOC
 
+# Set install mode
+install_mode="cloning"
+
 # Set projects folder
 project_folder_merossJS="merossJS"
 project_folder_merossApi="merossApi"
@@ -23,7 +26,7 @@ project_folder_merossApi="merossApi"
 destination_folder="$(pwd)"
 docker_scripts_folder="$(pwd)/docker-scripts"
 
-# SetmerossApi.conf.json folders
+# Set merossApi.conf.json folders
 config_file="merossApi.conf.json"
 config_file_path="dist/meross-js/assets/$config_file"
 
@@ -59,6 +62,7 @@ clone_and_copy() {
 
   if [ -d "$destination_path" ]; then
 
+    install_mode="pulling"
     cd "$destination_path"
 
     print_color "yellow" "Pulling latest changes for $repo_name repository..." 
@@ -84,8 +88,10 @@ clone_and_copy() {
 
   # Copy Docker scripts
   if [ -d "$docker_scripts_folder/$repo_name" ]; then
+
     cp -r "$docker_scripts_folder/$repo_name/"* "$destination_path/"
     print_color "green" "Scripts copied for $repo_name."
+
   else
     print_color "red" "Error: Docker scripts folder not found for $repo_name."
     exit 1
@@ -126,6 +132,7 @@ print_color "white" "------------------------------------------------------"
 
 # Check if the "merossApi" container already exists and remove it
 if docker ps -a --format '{{.Names}}' | grep -q '^merossApi$'; then
+
   print_color "magenta" "Removing existing merossApi container..."
   docker rm -f merossApi > /dev/null
   print_color "green" "Existing merossApi container removed."
@@ -153,23 +160,23 @@ fi
 node_version="18"
 
 save_merossJS_config() {
-  repo_name="$1"
 
+  repo_name="$1"
   print_color "blue" "Preserving $config_file from $config_file_path"
-  print_color "blue" "to $destination_folder/$config_file..."
+  print_color "blue" "To $destination_folder/$config_file..."
 
   if [ -f "$config_file_path" ]; then
     mv -f "$config_file_path" "$destination_folder/$config_file"
   fi
 
-  print_color "green" "preserved $config_file"
+  print_color "green" "Preserved $config_file"
 }
 
 restore_merossJS_config() {
-  repo_name="$1"
 
+  repo_name="$1"
   print_color "blue" "Restoring $config_file from $destination_folder/$config_file"
-  print_color "blue" "to $config_file_path..."
+  print_color "blue" "To $config_file_path..."
 
   if [ -f "$destination_folder/$config_file" ]; then
     mv -f "$destination_folder/$config_file" "$config_file_path"
@@ -179,12 +186,15 @@ restore_merossJS_config() {
 }
 
 # Function to build Angular project
-build_angular_project() {
-  repo_name="$project_folder_merossJS"  
 
+build_angular_project() {
+  
+  repo_name="$project_folder_merossJS"  
   cd "$destination_folder/$repo_name"
 
-  save_merossJS_config "$project_folder_merossJS"
+  if [ "$install_mode" == "pulling" ]; then
+    save_merossJS_config "$project_folder_merossJS"
+  fi
 
   print_color "white" "------------------------------------------------------"
 
@@ -226,7 +236,9 @@ build_angular_project() {
   print_color "white" "------------------------------------------------------"
 
   if [ $? -eq 0 ]; then
-    restore_merossJS_config "$project_folder_merossJS"
+    if [ "$install_mode" == "pulling" ]; then
+      restore_merossJS_config "$project_folder_merossJS"
+    fi
     print_color "green" "Angular project for $repo_name built successfully."
   else
     print_color "red" "Error: Angular project for $repo_name failed to build."
@@ -241,10 +253,9 @@ ln -sf "$destination_folder/merossJS/dist/meross-js/assets/merossApi.conf.json" 
 
 # Check if the "merossJS" container already exists and remove it
 if docker ps -a --format '{{.Names}}' | grep -q '^merossJS$'; then
-
-print_color "magenta" "Removing existing merossJs container..."
-docker rm -f merossJS > /dev/null
-print_color "green" "Existing merossJs container removed."
+  print_color "magenta" "Removing existing merossJs container..."
+  docker rm -f merossJS > /dev/null
+  print_color "green" "Existing merossJs container removed."
 fi
 
 # Start Docker containers for merossJS
@@ -259,4 +270,3 @@ else
   print_color "red" "Error: Docker containers failed to start for merossJS."
   exit 1
 fi
-
