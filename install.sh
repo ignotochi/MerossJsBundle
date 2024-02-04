@@ -65,7 +65,7 @@ clone_and_copy() {
       print_color "red" "Error: Pulling changes for $repo_name repository failed."
       exit 1
     else
-      mv "$destination_folder/$config_file_path" "$destination_path"
+      mv -f "$destination_folder/$config_file_path" "$repo_name/"
       print_color "green" "Successfully pulled latest changes for $repo_name."
     fi
   else
