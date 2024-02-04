@@ -155,25 +155,27 @@ node_version="18"
 save_merossJS_config() {
   repo_name="$1"
 
-  echo "Save current Path: $(pwd)"
-  echo "Save source Path: $config_file_path"
-  echo "Save destination Path: $destination_folder/$config_file"
+  print_color "blue" "Preserving $config_file from $config_file_path"
+  print_color "blue" "to $destination_folder/$config_file..."
 
   if [ -f "$config_file_path" ]; then
     mv -f "$config_file_path" "$destination_folder/$config_file"
   fi
+
+  print_color "green" "preserved $config_file"
 }
 
 restore_merossJS_config() {
   repo_name="$1"
 
-  echo "Restore current Path: $(pwd)"
-  echo "Restore source Path: $destination_folder/$config_file"
-  echo "Restore destination Path: $config_file_path"
+  print_color "blue" "Restoring $config_file from $destination_folder/$config_file"
+  print_color "blue" "to $config_file_path..."
 
   if [ -f "$destination_folder/$config_file" ]; then
     mv -f "$destination_folder/$config_file" "$config_file_path"
   fi
+
+  print_color "green" "Restoring of $config_file done!"
 }
 
 # Function to build Angular project
@@ -235,7 +237,7 @@ build_angular_project() {
 build_angular_project
 
 # create symlink for merossJS configuration
-ln -s "$destination_folder/merossJS/dist/meross-js/assets/merossApi.conf.json"  .
+ln -sf "$destination_folder/merossJS/dist/meross-js/assets/merossApi.conf.json"  .
 
 # Check if the "merossJS" container already exists and remove it
 if docker ps -a --format '{{.Names}}' | grep -q '^merossJS$'; then
