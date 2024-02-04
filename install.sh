@@ -163,7 +163,7 @@ save_merossJS_config() {
 
   repo_name="$1"
   print_color "blue" "Preserving $config_file from $config_file_path"
-  print_color "blue" "To $destination_folder/$config_file..."
+  print_color "blue" "To $destination_folder/$config_file"
 
   if [ -f "$config_file_path" ]; then
     mv -f "$config_file_path" "$destination_folder/$config_file"
@@ -176,7 +176,7 @@ restore_merossJS_config() {
 
   repo_name="$1"
   print_color "blue" "Restoring $config_file from $destination_folder/$config_file"
-  print_color "blue" "To $config_file_path..."
+  print_color "blue" "To $config_file_path"
 
   if [ -f "$destination_folder/$config_file" ]; then
     mv -f "$destination_folder/$config_file" "$config_file_path"
@@ -188,7 +188,7 @@ restore_merossJS_config() {
 # Function to build Angular project
 
 build_angular_project() {
-  
+
   repo_name="$project_folder_merossJS"  
   cd "$destination_folder/$repo_name"
 
