@@ -1,13 +1,16 @@
 ![ezcv logo](https://github.com/ignotochi/MerossJsBundle/blob/master/merossBundleInstallScriptExample.png)
 
-# MerossJsBundle - 1.0.1
+# MerossJsBundle - 1.1.0
 
 ### What is it MerossJsBundle
 
 This repository contains a bash script that allows you to clone the MerossApi and MerossJS repositories into two containers. The first one is a Python container, and the second one is inside an HTTPD container, using Docker Compose in both cases. The MerossJS container will be created only after compiling the source code, which is handled by the script.
 
+**If the script is launched multiple times, it will check whether the repository files already exist. If not, the entire repository will be cloned; otherwise, it will be updated with only the new changes**
+
 ### Requirements:
 
+- Git
 - Linux (tested on CentOS Stream 9)
 - Docker
 - Docker Compose (see: [https://docs.docker.com/compose/install](https://docs.docker.com/compose/install/linux/#install-using-the-repository))
@@ -29,6 +32,8 @@ Inside the MerossBundle folder, you will find a MerossJS folder, which contains 
 ```
 
 Modify it only if necessary, such as when the backend is exposed on an address other than localhost (default) or if you want to change the default language.
+
+**The changes made to the merossApi.conf.json file will persist across script relaunches, so there is no need to modify it with each script execution**
 
 ## How to install?
 
