@@ -45,7 +45,8 @@ clone_and_copy() {
   repo_url="$1"
   repo_name="$2"
 
-  config_file_path="merossApi.conf.json"
+  config_file="merossApi.conf.json"
+  config_file_path="dist/meross-js/assets/$config_file"
 
   print_color "white" "------------------------------------------------------"
 
@@ -54,7 +55,7 @@ clone_and_copy() {
   if [ -d "$destination_path" ]; then
     
     if [ -f "$config_file_path" ]; then
-      mv"$config_file_path" ../
+      mv"$config_file_path" "$destination_folder"
     fi
 
     print_color "yellow" "Pulling latest changes for $repo_name repository..."
@@ -65,7 +66,7 @@ clone_and_copy() {
       print_color "red" "Error: Pulling changes for $repo_name repository failed."
       exit 1
     else
-      mv -f "$destination_folder/$config_file_path" "$repo_name/"
+      mv -f "$destination_folder/$config_file" "$config_file_path/"
       print_color "green" "Successfully pulled latest changes for $repo_name."
     fi
   else
