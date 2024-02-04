@@ -155,31 +155,24 @@ node_version="18"
 save_merossJS_config() {
   repo_name="$1"
 
-  cd "$destination_folder"
-
-  destination_path="$destination_folder/$repo_name"
-
-  echo "Destination Folder Path: $destination_path" 
   echo "Save current Path: $(pwd)"
-  echo "Save source Path: $destination_path/$config_file_path"
-  echo "Save destination Path: $destination_folder"
+  echo "Save source Path: $config_file_path"
+  echo "Save destination Path: $destination_folder/$config_file"
 
-  if [ -f "$destination_path/$config_file_path" ]; then
-    mv "$destination_path/$config_file_path" "$destination_folder"
+  if [ -f "$config_file_path" ]; then
+    mv -f "$config_file_path" "$destination_folder/$config_file"
   fi
 }
 
 restore_merossJS_config() {
   repo_name="$1"
 
-  cd "$destination_folder"
-
   echo "Restore current Path: $(pwd)"
   echo "Restore source Path: $destination_folder/$config_file"
-  echo "Restore destination Path: $destination_folder/$repo_name/$config_file_path"
+  echo "Restore destination Path: $config_file_path"
 
   if [ -f "$destination_folder/$config_file" ]; then
-    mv -f "$destination_folder/$config_file" "$destination_folder/$repo_name/$config_file_path"
+    mv -f "$destination_folder/$config_file" "$config_file_path"
   fi
 }
 
@@ -187,9 +180,9 @@ restore_merossJS_config() {
 build_angular_project() {
   repo_name="$project_folder_merossJS"  
 
-  save_merossJS_config "$project_folder_merossJS"
-
   cd "$destination_folder/$repo_name"
+
+  save_merossJS_config "$project_folder_merossJS"
 
   print_color "white" "------------------------------------------------------"
 
