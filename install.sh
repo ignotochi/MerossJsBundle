@@ -15,6 +15,10 @@ Ensure that Docker, Git, npm, and Angular CLI are installed on your system befor
 Note: The script checks for successful execution at various stages and exits if any step fails.
 DOC
 
+# Set projects folder
+project_folder_merossJS="merossApi"
+project_folder_merossApi="merossJS"
+
 # Set the destination and scripts folders
 destination_folder="$(pwd)"
 docker_scripts_folder="$(pwd)/docker-scripts"
@@ -51,7 +55,11 @@ clone_and_copy() {
 
   print_color "white" "------------------------------------------------------"
 
- destination_path="$destination_folder/$repo_name"
+  if [ "$repo_name" == "$project_folder_merossJS" ]; then
+    save_merossJS_config "$project_folder_merossJS"
+  fi
+
+  destination_path="$destination_folder/$repo_name"
 
   if [ -d "$destination_path" ]; then
 
@@ -86,10 +94,16 @@ clone_and_copy() {
     print_color "red" "Error: Docker scripts folder not found for $repo_name."
     exit 1
   fi
+
+  if [ "$repo_name" == "$project_folder_merossJS" ]; then
+    restore_merossJS_config "$project_folder_merossJS"
+  fi
 }
 
-save_merossApi_config() {
+save_merossJS_config() {
   repo_name="$1"
+
+  cd "$destination_folder"
 
   destination_path="$destination_folder/$repo_name"
 
@@ -104,8 +118,10 @@ save_merossApi_config() {
   fi
 }
 
-restore_merossApi_config() {
+restore_merossJS_config() {
   repo_name="$1"
+
+  cd "$destination_folder"
 
   echo "Restore current Path: $(pwd)"
   echo "Restore source Path: $destination_folder/$config_file"
@@ -130,12 +146,10 @@ if [ ! -d "$docker_scripts_folder" ]; then
 fi
 
 # Clone and copy MerossApi repository
-clone_and_copy "$merossApi_url" "merossApi"
+clone_and_copy "$merossApi_url" "$project_folder_merossApi"
 
 # Clone and copy MerossJS repository
-save_merossApi_config "merossJS"
-clone_and_copy "$merossJS_url" "merossJS"
-restore_merossApi_config "merossJS"
+clone_and_copy "$merossJS_url" "$project_folder_merossJS"
 
 print_color "green" "Repositories cloned and scripts copied successfully."
 
