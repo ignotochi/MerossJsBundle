@@ -55,10 +55,6 @@ clone_and_copy() {
 
   print_color "white" "------------------------------------------------------"
 
-  if [ "$repo_name" == "$project_folder_merossJS" ]; then
-    save_merossJS_config "$project_folder_merossJS"
-  fi
-
   destination_path="$destination_folder/$repo_name"
 
   if [ -d "$destination_path" ]; then
@@ -93,41 +89,6 @@ clone_and_copy() {
   else
     print_color "red" "Error: Docker scripts folder not found for $repo_name."
     exit 1
-  fi
-
-  if [ "$repo_name" == "$project_folder_merossJS" ]; then
-    restore_merossJS_config "$project_folder_merossJS"
-  fi
-}
-
-save_merossJS_config() {
-  repo_name="$1"
-
-  cd "$destination_folder"
-
-  destination_path="$destination_folder/$repo_name"
-
-  echo "Destination Folder Path: $destination_path" 
-  echo "Save current Path: $(pwd)"
-  echo "Save source Path: $destination_path/$config_file_path"
-  echo "Save destination Path: $destination_folder"
-
-  if [ -f "$destination_path/$config_file_path" ]; then
-    mv "$destination_path/$config_file_path" "$destination_folder"
-  fi
-}
-
-restore_merossJS_config() {
-  repo_name="$1"
-
-  cd "$destination_folder"
-
-  echo "Restore current Path: $(pwd)"
-  echo "Restore source Path: $destination_folder/$config_file"
-  echo "Restore destination Path: $destination_folder/$repo_name/$config_file_path"
-
-  if [ -f "$destination_folder/$config_file" ]; then
-    mv -f "$destination_folder/$config_file" "$destination_folder/$repo_name/$config_file_path"
   fi
 }
 
@@ -191,9 +152,42 @@ fi
  
 node_version="18"
 
+save_merossJS_config() {
+  repo_name="$1"
+
+  cd "$destination_folder"
+
+  destination_path="$destination_folder/$repo_name"
+
+  echo "Destination Folder Path: $destination_path" 
+  echo "Save current Path: $(pwd)"
+  echo "Save source Path: $destination_path/$config_file_path"
+  echo "Save destination Path: $destination_folder"
+
+  if [ -f "$destination_path/$config_file_path" ]; then
+    mv "$destination_path/$config_file_path" "$destination_folder"
+  fi
+}
+
+restore_merossJS_config() {
+  repo_name="$1"
+
+  cd "$destination_folder"
+
+  echo "Restore current Path: $(pwd)"
+  echo "Restore source Path: $destination_folder/$config_file"
+  echo "Restore destination Path: $destination_folder/$repo_name/$config_file_path"
+
+  if [ -f "$destination_folder/$config_file" ]; then
+    mv -f "$destination_folder/$config_file" "$destination_folder/$repo_name/$config_file_path"
+  fi
+}
+
 # Function to build Angular project
 build_angular_project() {
   repo_name="$project_folder_merossJS"  
+
+  save_merossJS_config "$project_folder_merossJS"
 
   cd "$destination_folder/$repo_name"
 
@@ -237,6 +231,7 @@ build_angular_project() {
   print_color "white" "------------------------------------------------------"
 
   if [ $? -eq 0 ]; then
+    restore_merossJS_config "$project_folder_merossJS"
     print_color "green" "Angular project for $repo_name built successfully."
   else
     print_color "red" "Error: Angular project for $repo_name failed to build."
