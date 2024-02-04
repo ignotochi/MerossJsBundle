@@ -45,26 +45,47 @@ clone_and_copy() {
   repo_url="$1"
   repo_name="$2"
 
+  config_file_path="merossApi.conf.json"
+
   print_color "white" "------------------------------------------------------"
 
-  print_color "yellow" "Cloning $repo_name repository..."
-  
-  git clone "$repo_url" "$destination_folder/$repo_name"
-  
-  if [ -d "$destination_folder/$repo_name" ]; then
-    # Remove unwanted files if necessary (e.g., main.py)
-    rm "$destination_folder/$repo_name/main.py" 2>/dev/null
+ destination_path="$destination_folder/$repo_name"
 
-    # Copy Docker scripts
-    if [ -d "$docker_scripts_folder/$repo_name" ]; then
-      cp -r "$docker_scripts_folder/$repo_name/"* "$destination_folder/$repo_name/"
-      print_color "green" "Scripts copied for $repo_name."
-    else
-      print_color "red" "Error: Docker scripts folder not found for $repo_name."
+  if [ -d "$destination_path" ]; then
+    
+    if [ -f "$config_file_path" ]; then
+      mv"$config_file_path" ../
+    fi
+
+    print_color "yellow" "Pulling latest changes for $repo_name repository..."
+    cd "$destination_path"
+    git pull
+
+    if [ $? -ne 0 ]; then
+      print_color "red" "Error: Pulling changes for $repo_name repository failed."
       exit 1
+    else
+      mv "$destination_folder/$config_file_path" "$destination_path"
+      print_color "green" "Successfully pulled latest changes for $repo_name."
     fi
   else
-    print_color "red" "Error: Cloning $repo_name repository failed."
+    print_color "yellow" "Cloning $repo_name repository..."
+    git clone "$repo_url" "$destination_path"
+
+    if [ $? -ne 0 ]; then
+      print_color "red" "Error: Cloning $repo_name repository failed."
+      exit 1
+    else
+      print_color "green" "Successfully cloned $repo_name repository."
+    fi
+  fi
+
+  # Copy Docker scripts
+  if [ -d "$docker_scripts_folder/$repo_name" ]; then
+    cp -r "$docker_scripts_folder/$repo_name/"* "$destination_path/"
+    print_color "green" "Scripts copied for $repo_name."
+  else
+    print_color "red" "Error: Docker scripts folder not found for $repo_name."
     exit 1
   fi
 }
