@@ -93,6 +93,12 @@ save_merossApi_config() {
 
   destination_path="$destination_folder/$repo_name"
 
+  echo "Destination Folder Path: $destination_path"
+  
+  echo "Save current Path: $(pwd)"
+  echo "Save source Path: $destination_path/$config_file_path"
+  echo "Save destination Path: $destination_folder"
+
   if [ -f "$destination_path/$config_file_path" ]; then
     mv "$destination_path/$config_file_path" "$destination_folder"
   fi
@@ -100,6 +106,10 @@ save_merossApi_config() {
 
 restore_merossApi_config() {
   repo_name="$1"
+
+  echo "Restore current Path: $(pwd)"
+  echo "Restore source Path: $destination_folder/$config_file"
+  echo "Restore destination Path: $destination_folder/$repo_name/$config_file_path"
 
   if [ -f "$destination_folder/$config_file" ]; then
     mv -f "$destination_folder/$config_file" "$destination_folder/$repo_name/$config_file_path"
