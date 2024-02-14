@@ -55,7 +55,7 @@ This will clone the MerossApi and MerossJS repositories, and then the frontend i
 
 After the procedure is complete, go into the merossJs folder and modify the merossApi.conf.json file if necessary, as mentioned earlier.
 
-then open your brpwser and navigate to:
+then open your browser and navigate to:
 
 ``` bash 
 http://localhost:8389
